@@ -1,0 +1,172 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Rell",
+	"patterns": [
+        {
+            "include": "#comments"
+        },
+		{
+			"include": "#ctrl-statements"
+		},
+		{
+			"include": "#reserved-words"
+		},
+		{
+			"include": "#namings"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+        "numbers": {
+            "patterns": [{
+                "name": "constant.numeric.rell",
+                "match": "-?\\d*\\.?\\d+"
+            }]
+        },
+        "ctrl-statements": {
+            "patterns": [
+                {
+                    "name": "keyword.control.rell",
+                    "match": "\\b(return|if|else|when|for|in|while|break|continue|\\@?module|abstract|\\@test|\\@mount|function|import|create|delete|update|operation|query|object|entity|struct|enum)\\b"
+                },
+                {
+                    "name": "storage.type.rell",
+    				"match": "\\b(val|var)\\b"
+                }
+            ]
+        },
+		"reserved-words": {
+			"patterns": [
+                {
+                    "name": "support.type.rell",
+    				"match": "(boolean|integer|decimal|text|byte_array|rowid|json|unit|null|range|gtv|list|set|map|virtual|op_context|chain_context)"
+                },
+                {
+                    "name": "storage.function.rell",
+                    "match": "\\@(\\*|\\?)?(?=(\\s|{))"
+                }
+            ]
+		},
+        "namings": {
+            "patterns": [
+                {
+                    "name": "support.function.rell",
+                    "match": "(?<=function)\\s*[a-zA-Z_][a-zA-Z_0-9]*"
+                },
+                {
+                    "begin": "\\(",
+                    "end": "\\)",
+                    "patterns": [
+                        {
+                            "name": "support.variable.rell",
+                            "match": "[a-zA-Z_][a-zA-Z_0-9]*\\s*(?=\\:)"
+                        },
+                        {
+                            "name": "support.type.rell",
+                            "match": "(?<=\\:)\\s*[a-zA-Z_][a-zA-Z_0-9]*"
+                        },
+                        {
+                            "name": "support.type.rell",
+                            "match": "(?<!\\.)[a-zA-Z_][a-zA-Z_0-9]+(?=\\.)"
+                        },
+                        {
+                            "name": "support.variable.rell",
+                            "match": "[a-zA-Z_][a-zA-Z_0-9]+"
+                        },
+                        {
+                            "include": "#reserved-words"
+                        },
+                        {
+                            "include": "#numbers"
+                        },
+                        {
+                            "include": "#strings"
+                        }
+                    ]
+                },
+                {
+                    "name": "support.function.rell",
+                    "match": "[a-zA-Z_][a-zA-Z_0-9]*(?=\\()"
+                },
+                {
+                    "name": "support.type.rell",
+                    "match": "(?<=(create|update|delete|entity|struct|object))\\s*[a-zA-Z_][a-zA-Z_0-9]*"
+                },
+                {
+                    "name": "support.type.rell",
+                    "match": "[a-zA-Z_][a-zA-Z_0-9]*\\s*(?=\\@(\\*|\\?)?)"
+                },
+                {
+                    "name": "support.variable.rell",
+                    "match": "(?<=(val|var))\\s+[a-zA-Z_][a-zA-Z_0-9]*"
+                }
+            ]
+        },
+        "comments": {
+            "patterns": [
+                {
+                    "begin": "//",
+                    "end": "\\n",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.inline.rell"
+                        }
+                    },
+                    "name": "comment.line.rell"
+                },
+                {
+                    "begin": "/\\*(\\*)?(?!/)",
+                    "end": "\\*/",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.block.rell"
+                        }
+                    },
+                    "name": "comment.block.rell"
+                }
+            ]
+        },
+		"strings": {
+            "patterns": [
+                {
+                    "begin": "\"",
+                    "end": "\"",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "string.quoted.double.rell"
+                        }
+                    },
+                    "name": "string.quoted.double.rell",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.rell",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "begin": "\\'",
+                    "end": "\\'",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "string.quoted.single.rell"
+                        }
+                    },
+                    "name": "string.quoted.single.rell",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.rell",
+                            "match": "\\\\."
+                        }
+                    ]
+                }
+            ]
+        }
+	},
+	"scopeName": "source.rell"
+}
